@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input { padding: 10px; width: 200px; }
+        button { padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>Product Sales Prediction</h1>
+    <p>Enter Advertising Spend ($):</p>
+    <input type="number" id="adSpend" placeholder="e.g., 500">
+    <br><br>
+    <button onclick="predict()">Predict Units Sold</button>
+    <h2 id="result"></h2>
+
+    <script>
+        async function predict() {
+            const adSpend = document.getElementById('adSpend').value;
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 'Advertising Spend': Number(adSpend) })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = 'Predicted Units Sold: ' + data['Predicted Units Sold'];
+        }
+    </script>
+</body>
+</html>
